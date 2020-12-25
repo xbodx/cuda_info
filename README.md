@@ -39,3 +39,9 @@ optional
 pip install tensorflow-gpu==1.15.2
 pip install torch
 ```
+
+# run
+
+```
+python main.py
+```
