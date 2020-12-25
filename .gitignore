@@ -5,6 +5,7 @@ __pycache__/
 
 # Environments
 .cuda_info_env
+.python-version
 
 # IDE
 .vscode/
