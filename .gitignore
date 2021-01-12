@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 # Environments
-.cuda_info_env
+.cuda_info_env_*
 .python-version
 
 # IDE
