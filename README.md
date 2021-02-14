@@ -15,15 +15,22 @@ pyenv local 3.7.9
 
 in windows
 ```
-python -m venv .cuda_info_env
-.\.cuda_info_env\Scripts\activate.bat 
+python -m venv .cuda_info_env_win
+.\.cuda_info_env_win\Scripts\activate.bat 
 python -m pip install --upgrade pip
 ```
 
 in linux
 ```
-python -m venv .cuda_info_env
-source ./.cuda_info_env/bin/activate
+python -m venv .cuda_info_lin_env
+source ./.cuda_info_lin_env/bin/activate
+python -m pip install --upgrade pip
+```
+
+in wsl
+```
+python -m venv .cuda_info_env_ubu
+source ./.cuda_info_env_ubu/bin/activate
 python -m pip install --upgrade pip
 ```
 
@@ -37,12 +44,14 @@ pip install GPUtil
 optional
 ```
 pip install tensorflow-gpu==1.15.2
-pip install torch
+pip install torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+
 ```
 
 # run
 
 ```
+/usr/local/cuda/bin/nvcc --version
 python main.py
 ```
 
