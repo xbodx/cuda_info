@@ -1,47 +1,15 @@
 # info
 
-Small script that shows information about the GPU and CUDA
-
-# pyenv
-
-```
-pyenv install --list
-pyenv install 3.7.9
-pyenv versions
-pyenv local 3.7.9
-```
-
-# venv
-
-in windows
-```
-python -m venv .cuda_info_env_win
-.\.cuda_info_env_win\Scripts\activate.bat 
-python -m pip install --upgrade pip
-```
-
-in linux
-```
-python -m venv .cuda_info_lin_env
-source ./.cuda_info_lin_env/bin/activate
-python -m pip install --upgrade pip
-```
-
-in wsl
-```
-python -m venv .cuda_info_env_ubu
-source ./.cuda_info_env_ubu/bin/activate
-python -m pip install --upgrade pip
-```
+Small script that shows information about the GPU and CUDA 
+Requirements https://github.com/anderskm/gputil
+Optional requirements torch, tensorflow
 
 # pip
-
-required
+## required
 ```
 pip install GPUtil
 ```
-
-optional
+## optional
 ```
 pip install tensorflow-gpu==1.15.2
 pip install torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.html
@@ -49,15 +17,12 @@ pip install torch==1.7.1+cu101 -f https://download.pytorch.org/whl/torch_stable.
 ```
 
 # run
-
 ```
 /usr/local/cuda/bin/nvcc --version
-python main.py
+python cuda_info/test.py
 ```
 
-
-# example 
-
+# out example 
 ```
 ID = 0
 Name = Tesla T4
