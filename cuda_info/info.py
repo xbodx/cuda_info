@@ -34,6 +34,10 @@ def to_text(sentence):
     return '\n'.join(res)
 
 def get_GPU_info() -> str:
+    """
+    refactoring https://github.com/anderskm/gputil/blob/master/GPUtil/GPUtil.py showUtilization
+    replace print to string list
+    """
     try:
         info = getGPUs()
     except Exception as e:
