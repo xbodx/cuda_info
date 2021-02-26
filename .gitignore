@@ -4,8 +4,11 @@ __pycache__/
 *$py.class
 
 # Environments
-.cuda_info_env_*
+.*env*
 .python-version
+
+# Setup
+cuda_info.egg-info
 
 # IDE
 .vscode/
