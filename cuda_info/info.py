@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from GPUtil import getGPUs
+from GPUtil import getGPUs, GPU
 
 installed_torch = False
 try:
@@ -39,72 +39,26 @@ def get_GPU_info() -> str:
     replace print to string list
     """
     try:
-        info = getGPUs()
+        infos = getGPUs()
     except Exception as e:
         print(e)
-        info = []
-    attrList = [
-        [{'attr': 'id', 'name': 'ID'},
-         {'attr': 'name', 'name': 'Name'},
-         {'attr': 'uuid', 'name': 'UUID'}],
-        [{'attr': 'load', 'name': 'GPU util.', 'suffix': '%', 'transform': lambda x: x * 100, 'precision': 0},
-         {'attr': 'memoryUtil', 'name': 'Memory util.', 'suffix': '%', 'transform': lambda x: x * 100,
-          'precision': 0}],
-        [{'attr': 'memoryTotal', 'name': 'Memory total', 'suffix': 'MB', 'precision': 0},
-         {'attr': 'memoryUsed', 'name': 'Memory used', 'suffix': 'MB', 'precision': 0},
-         {'attr': 'memoryFree', 'name': 'Memory free', 'suffix': 'MB', 'precision': 0}]
-    ]
-
-    headers = []
-    infos = [[]] * len(info)
-    for attrGroup in attrList:
-        for attrDict in attrGroup:
-            headers.append(attrDict['name'])
-
-            attrPrecision = '.' + str(attrDict['precision']) if ('precision' in attrDict.keys()) else ''
-            attrSuffix = str(attrDict['suffix']) if ('suffix' in attrDict.keys()) else ''
-            attrTransform = attrDict['transform'] if ('transform' in attrDict.keys()) else lambda x: x
-            for gpu in info:
-                attr = getattr(gpu, attrDict['attr'])
-                attr = attrTransform(attr)
-
-                if (isinstance(attr, float)):
-                    attrStr = ('{0:' + attrPrecision + 'f}').format(attr)
-                elif (isinstance(attr, int)):
-                    attrStr = ('{0:d}').format(attr)
-                elif (isinstance(attr, str)):
-                    attrStr = attr;
-                elif (sys.version_info[0] == 2):
-                    if (isinstance(attr, unicode)):
-                        attrStr = attr.encode('ascii', 'ignore')
-                else:
-                    raise TypeError(
-                        'Unhandled object type (' + str(type(attr)) + ') for attribute \'' + attrDict['name'] + '\'')
-
-            for gpuIdx, gpu in enumerate(info):
-                attr = getattr(gpu, attrDict['attr'])
-                attr = attrTransform(attr)
-
-                if (isinstance(attr, float)):
-                    attrStr = ('{0:' + attrPrecision + 'f}').format(attr)
-                elif (isinstance(attr, int)):
-                    attrStr = '{0:0d}'.format(attr)
-                elif (isinstance(attr, str)):
-                    attrStr = attr
-                elif (sys.version_info[0] == 2):
-                    if (isinstance(attr, unicode)):
-                        attrStr = attr.encode('ascii', 'ignore')
-                else:
-                    raise TypeError(
-                        'Unhandled object type (' + str(type(attr)) + ') for attribute \'' + attrDict['name'] + '\'')
-
-                attrStr += attrSuffix
-                infos[gpuIdx].append(attrStr)
-
+        infos = []
     result = []
     for info in infos:
-        for ziped in zip(headers, info):
-            result.append(f'{ziped[0]} = {ziped[1]}')
+        gpu: GPU = info
+        result.append(f'ID = {gpu.id}')
+        result.append(f'Name = {gpu.name}')
+        result.append(f'UUID = {gpu.uuid}')
+        result.append(f'Serial = {gpu.serial}')
+        result.append(f'Load = {gpu.load}')
+        result.append(f'Memory Total = {gpu.memoryTotal}')
+        result.append(f'Memory Used = {gpu.memoryUsed}')
+        result.append(f'Memory Free = {gpu.memoryFree}')
+        result.append(f'Memory Util = {gpu.memoryUtil}')
+        result.append(f'Driver = {gpu.driver}')
+        result.append(f'Temperature = {gpu.temperature}')
+        result.append(f'Display Mode = {gpu.display_mode}')
+        result.append(f'Display Active = {gpu.display_active}')
     return result
 
 
